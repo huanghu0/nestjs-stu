@@ -35,6 +35,18 @@ findAll() {
 
 上面`abcd`, `ab_cd`, `abecd`都能匹配
 
+## 状态码 自定义Header 重定向 路径参数
 
+请求默认返回200，post除外默认返回201，可以使用@HttpCode改变状态码
+
+```ts
+@Post()
+@HttpCode(204)
+create() {
+  return 'This action adds a new cat';
+}
+```
+
+## 
 
 
