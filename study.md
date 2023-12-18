@@ -20,7 +20,7 @@ export class CatsController {
   create():string {
     return 'This action adds a new cat'
   }
-  
+
 }
 ```
 
@@ -47,6 +47,119 @@ create() {
 }
 ```
 
-## 
+## 完整示例
 
+```typescript
+import { Controller, Get, Query, Post, Body, Put, Param, Delete } from '@nestjs/common';
+import { CreateCatDto, UpdateCatDto, ListAllEntities } from './dto';
 
+@Controller('cats')
+export class CatsController {
+  @Post()
+  create(@Body() createCatDto: CreateCatDto) {
+    return 'This action adds a new cat';
+  }
+
+  @Get()
+  findAll(@Query() query: ListAllEntities) {
+    return `This action returns all cats (limit: ${query.limit} items)`;
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return `This action returns a #${id} cat`;
+  }
+
+  @Put(':id')
+  update(@Param('id') id: string, @Body() updateCatDto: UpdateCatDto) {
+    return `This action updates a #${id} cat`;
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return `This action removes a #${id} cat`;
+  }
+}n removes a #${id} cat`;
+  }
+}
+}
+```
+
+## 使用库特定的响应对象
+
+```ts
+import { Controller, Get, Post, Res, HttpStatus } from '@nestjs/common';
+import { Response } from 'express';
+
+@Controller('cats')
+export class CatsController {
+  @Post()
+  create(@Res() res: Response) {
+    res.status(HttpStatus.CREATED).send();
+  }
+
+  @Get()
+  findAll(@Res() res: Response) {
+     res.status(HttpStatus.OK).json([]);
+  }
+}
+```
+
+# 2.Providers
+
+## 完整实例
+
+cats.service.ts
+
+```ts
+import { Injectable } from '@nestjs/common';
+import { Cat } from './interface';
+
+@Injectable()
+export class CatsService {
+  private readonly cats: Cat[] = [];
+
+  create(cat: Cat) {
+    this.cats.push(cat);
+  }
+
+  findAll(): Cat[] {
+    return this.cats;
+  }
+}
+```
+
+cats.controller.ts
+
+```ts
+import { Controller,Get, Req,Post, HttpCode, Header, Redirect, Query, Param,Delete,Bind,Body,Put,Res,HttpStatus,Dependencies  } from "@nestjs/common";
+import { Request,Response } from "express";
+import { CatsService } from './cats.service';
+import { Cat } from "./interface";
+@Controller('cats')
+export class CatsController {
+  constructor(private readonly catsService: CatsService ) {
+  }
+
+  @Post()
+  async create(@Body() createCatDto:Cat) {
+    this.catsService.create(createCatDto);
+  }
+
+  @Get()
+  async findAll(): Promise<Cat[]> {
+    return this.catsService.findAll();
+  }  
+}
+```
+
+interface.ts
+
+```ts
+
+export interface Cat {
+  name: string;
+  age: number;
+  breed: string;
+}
+```
