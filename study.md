@@ -163,3 +163,147 @@ export interface Cat {
   breed: string;
 }
 ```
+
+app.modules.ts
+
+```ts
+import { Module } from '@nestjs/common';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { CatsController } from './cats/cats.controller';
+import { CatsService } from './cats/cats.service';
+
+
+@Module({
+  imports: [],
+  controllers: [AppController,CatsController],
+  providers: [AppService,CatsService],
+})
+export class AppModule {}
+
+```
+
+# 3.Modules
+
+cats.modules.ts
+
+```ts
+import { Module } from '@nestjs/common';
+import { CatsController } from './cats.controller';
+import { CatsService } from './cats.service';
+
+@Module({
+  controllers: [CatsController],
+  providers: [CatsService],
+})
+export class CatsModule {}
+```
+
+app.module.ts
+
+```ts
+import { Module } from '@nestjs/common';
+import { CatsModule } from './cats/cats.module';
+
+@Module({
+  imports: [CatsModule],
+})
+export class AppModule {}
+```
+
+# 4.中间件
+
+创建一个中间件
+
+```ts
+import { Injectable,NestMiddleware } from "@nestjs/common";
+import { Request,Response,NextFunction } from "express";
+
+@Injectable()
+export class LoggerMiddleware implements NestMiddleware {
+  use(req: Request, res: Response, next:NextFunction) {
+    console.log(req,'req--------------------')
+    next()
+  }
+}
+```
+
+注入中间件(可以在每个module中注入)
+
+```ts
+import { MiddlewareConsumer, Module, NestModule,RequestMethod  } from '@nestjs/common';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { CatsModule } from './cats/cats.module';
+import { LoggerMiddleware } from './logger/middleware';
+import { UserModule } from './user/user.module';
+import { UserController } from './user/user.controller';
+import { CatsController } from './cats/cats.controller';
+
+@Module({
+  imports: [CatsModule, UserModule],
+  controllers: [AppController],
+  providers: [AppService],
+})
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('*')
+    // consumer.apply(LoggerMiddleware).forRoutes({path:'user',method:RequestMethod.GET}) // 给指定方法绑定中间件
+    // consumer.apply(LoggerMiddleware).forRoutes(CatsController,UserController) // 直接放入controller
+    // consumer
+    // .apply(LoggerMiddleware)
+    // .exclude(
+    //   { path: 'cats', method: RequestMethod.GET },
+    //   { path: 'cats', method: RequestMethod.POST },
+    //   'cats/(.*)',
+    // )
+    // .forRoutes('*');    // 判处一些路由不传中间件
+  }
+}
+ }
+}
+,'user')
+  }
+}
+
+```
+
+
+
+全局中间件
+
+```ts
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import { VersioningType } from '@nestjs/common';
+import * as session from 'express-session'
+import * as cors from 'cors'
+
+const whiteList = ['/list']
+
+function middleWareAll (req,res,next) {
+  if(whiteList.includes(req.originalUrl)){
+    next()
+  }else{
+    res.send({code:200})
+  }
+}
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  app.enableVersioning({
+    type: VersioningType.URI
+  })
+  // app.use(middleWareAll)
+  app.use(cors())
+  app.use(session({secret: "HuangHu", name: "huanghu.session", rolling: true, cookie: { maxAge: null }  }))
+  await app.listen(3000);
+}
+bootstrap();(3000);
+}
+bootstrap();
+```
+
+
+
+
