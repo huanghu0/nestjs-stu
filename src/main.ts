@@ -1,8 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { VersioningType } from '@nestjs/common';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { join } from 'path';
 import * as session from 'express-session'
 import * as cors from 'cors'
+import { Observable } from "rxjs";
+import { observableFunc } from "./rxjs/index"
 
 const whiteList = ['/list']
 
@@ -15,13 +19,20 @@ function middleWareAll (req,res,next) {
 }
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableVersioning({
     type: VersioningType.URI
   })
   // app.use(middleWareAll)
   app.use(cors())
   app.use(session({secret: "HuangHu", name: "huanghu.session", rolling: true, cookie: { maxAge: null }  }))
+
+  app.useStaticAssets(join(__dirname,'images'),{
+    prefix:'/huanghu'
+  })
+
   await app.listen(3000);
 }
 bootstrap();
+
+observableFunc();
