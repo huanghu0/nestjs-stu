@@ -28,7 +28,7 @@ const observableFuntion = ()  => {
     if (e.num == 10) {
         subs.unsubscribe()
     }
-})  
+  })  
 } 
 
 export const observableFunc =  observableFuntion

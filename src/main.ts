@@ -7,6 +7,8 @@ import * as session from 'express-session'
 import * as cors from 'cors'
 import { Observable } from "rxjs";
 import { observableFunc } from "./rxjs/index"
+import { Response } from './common/response';
+import { HttpFilter } from './common/filter'
 
 const whiteList = ['/list']
 
@@ -26,7 +28,8 @@ async function bootstrap() {
   // app.use(middleWareAll)
   app.use(cors())
   app.use(session({secret: "HuangHu", name: "huanghu.session", rolling: true, cookie: { maxAge: null }  }))
-
+  app.useGlobalInterceptors(new Response())
+  app.useGlobalFilters(new HttpFilter())
   app.useStaticAssets(join(__dirname,'images'),{
     prefix:'/huanghu'
   })

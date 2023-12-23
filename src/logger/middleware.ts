@@ -8,3 +8,11 @@ export class LoggerMiddleware implements NestMiddleware {
     next()
   }
 }
+
+// @Injectable()
+// export class UserMiddleware implements NestMiddleware {
+//   use(req: Request, res: Response, next:NextFunction) {
+//     console.log(req,'reqxxxxxxxxxxxxxxxxx--------------------')
+//     next()
+//   }
+// }

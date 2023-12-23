@@ -304,6 +304,116 @@ bootstrap();(3000);
 bootstrap();
 ```
 
+# 5.拦截器
+
+```ts
+// response.ts
+import { Injectable,NestInterceptor,CallHandler, ExecutionContext } from "@nestjs/common";
+import { map } from 'rxjs/operators'
+import { Observable } from "rxjs";
+
+interface data<T> {
+  data:T
+}
+
+// 拦截器是用 @Injectable() 装饰器注释并实现 NestInterceptor 接口的类。
+@Injectable()
+export class Response<T = any> implements NestInterceptor {
+  intercept(context: ExecutionContext, next: CallHandler<any>): Observable<data<T>> {
+    console.log('context--------------------')
+    console.log(context,)
+    console.log('context--------------------')
+    return next.handle().pipe(map(data => {
+      console.log(data,'data----------------------')
+      return {
+        data,
+        status:0,
+        success:true,
+        message:'哈哈'
+      }
+    }))
+  }
+}
 
 
 
+// main.ts
+app.useGlobalInterceptors(new Response()) // 全局拦截器
+```
+
+```ts
+// 针对某个模块的拦截器
+import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nestjs/common';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+@Injectable()
+export class LoggingInterceptor implements NestInterceptor {
+  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+    console.log('Before...');
+
+    const now = Date.now();
+    return next
+      .handle()
+      .pipe(
+        tap(() => console.log(`After... ${Date.now() - now}ms`)),
+      );
+  }
+}
+```
+
+```ts
+// cats.controller.ts
+import { Controller,Get, Req,Post, HttpCode, Header, Redirect, Query, Param,Delete,Bind,Body,Put,Res,HttpStatus,Dependencies, UseInterceptors  } from "@nestjs/common";
+import { Request,Response } from "express";
+import { CatsService } from './cats.service';
+import { Cat } from "./interface";
+import { LoggingInterceptor } from "../logger/interceptor"
+@Controller('cats')
+@UseInterceptors(LoggingInterceptor)
+export class CatsController {
+  constructor(private readonly catsService: CatsService ) {
+  }
+
+  @Post()
+  async create(@Body() createCatDto:Cat) {
+    this.catsService.create(createCatDto);
+  }
+
+  @Get()
+  async findAll(): Promise<Cat[]> {
+    return this.catsService.findAll();
+  }  
+}
+```
+
+# 异常过滤器
+
+```ts
+// filter.ts
+import { ExceptionFilter,Catch,ArgumentsHost, HttpException,HttpStatus } from "@nestjs/common";
+import { HttpAdapterHost } from '@nestjs/core';
+import { Request,Response } from "express";
+
+// 捕获http 异常
+@Catch(HttpException)
+export class HttpFilter implements ExceptionFilter {
+  catch(exception: HttpException, host: ArgumentsHost) {
+    const ctx = host.switchToHttp()
+    const request = ctx.getRequest<Request>()
+    const response = ctx.getResponse<Response>()
+    const status = exception.getStatus()
+    // console.log('filter----------------------------------------------')
+    response.status(status).json({
+      data: exception.message,
+      time: new Date().getTime(),
+      success: false,
+      path: request.url,
+      status
+    })
+  }
+}
+
+// main.ts
+app.useGlobalFilters(new HttpFilter())
+```
