@@ -1,8 +1,11 @@
-import { Controller,Get, Req,Post, HttpCode, Header, Redirect, Query, Param,Delete,Bind,Body,Put,Res,HttpStatus,Dependencies, UseInterceptors  } from "@nestjs/common";
+import { Controller,Get, Req,Post, HttpCode, Header, Redirect, Query, Param,Delete,Bind,Body,Put,Res,HttpStatus,Dependencies, UseInterceptors, ParseUUIDPipe  } from "@nestjs/common";
 import { Request,Response } from "express";
 import { CatsService } from './cats.service';
 import { Cat } from "./interface";
 import { LoggingInterceptor } from "../logger/interceptor"
+// import * as uuid from 'uuid'
+// console.log(uuid.v4())
+
 @Controller('cats')
 @UseInterceptors(LoggingInterceptor)
 export class CatsController {
@@ -18,4 +21,9 @@ export class CatsController {
   async findAll(): Promise<Cat[]> {
     return this.catsService.findAll();
   }  
+
+  @Get(':id')
+  async findOne(@Param('id',ParseUUIDPipe) id:string) {
+    return '验证ParseUUIDPipe'
+  }
 }

@@ -8,7 +8,8 @@ import * as cors from 'cors'
 import { Observable } from "rxjs";
 import { observableFunc } from "./rxjs/index"
 import { Response } from './common/response';
-import { HttpFilter } from './common/filter'
+import { HttpFilter } from './common/filter';
+import { ValidationPipe } from '@nestjs/common';
 
 const whiteList = ['/list']
 
@@ -33,9 +34,9 @@ async function bootstrap() {
   app.useStaticAssets(join(__dirname,'images'),{
     prefix:'/huanghu'
   })
-
+  app.useGlobalPipes(new ValidationPipe())
   await app.listen(3000);
 }
 bootstrap();
 
-observableFunc();
+// observableFunc();

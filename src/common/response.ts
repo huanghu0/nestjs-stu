@@ -10,11 +10,7 @@ interface data<T> {
 @Injectable()
 export class Response<T = any> implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler<any>): Observable<data<T>> {
-    console.log('context--------------------')
-    console.log(context,)
-    console.log('context--------------------')
     return next.handle().pipe(map(data => {
-      console.log(data,'data----------------------')
       return {
         data,
         status:0,

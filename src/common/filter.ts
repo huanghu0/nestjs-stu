@@ -10,7 +10,6 @@ export class HttpFilter implements ExceptionFilter {
     const request = ctx.getRequest<Request>()
     const response = ctx.getResponse<Response>()
     const status = exception.getStatus()
-    // console.log('filter----------------------------------------------')
     response.status(status).json({
       data: exception.message,
       time: new Date().getTime(),
