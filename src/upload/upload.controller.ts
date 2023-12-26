@@ -6,8 +6,10 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import type { Response } from 'express'
 import { join } from 'path';
 import {  zip } from 'compressing';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('upload')
+@ApiTags('下载')
 export class UploadController {
   constructor(private readonly uploadService: UploadService) {}
 
