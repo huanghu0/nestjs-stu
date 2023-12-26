@@ -3,6 +3,7 @@ import { RoleService } from './role.service';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { RoleGuard } from './role.guard';
+import { Role,ReqUrl } from './role.decorator';
 
 @Controller('role')
 @UseGuards(RoleGuard)
@@ -15,8 +16,10 @@ export class RoleController {
   }
 
   @Get()
-  @SetMetadata('role',['admin'])  
-  findAll() {
+  // @SetMetadata('role',['admin'])  
+  @Role(['admin'])
+  findAll(@ReqUrl() url) {
+    // console.log(url,'url--------------------------------')
     return this.roleService.findAll();
   }
 
