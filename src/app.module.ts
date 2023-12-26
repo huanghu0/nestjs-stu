@@ -6,9 +6,10 @@ import { LoggerMiddleware } from './logger/middleware';
 import { UserModule } from './user/user.module';
 import { UploadModule } from './upload/upload.module';
 import { PipeModule } from './pipe/pipe.module';
+import { RoleModule } from './role/role.module';
 
 @Module({
-  imports: [CatsModule, UserModule, UploadModule, PipeModule],
+  imports: [CatsModule, UserModule, UploadModule, PipeModule, RoleModule],
   controllers: [AppController],
   providers: [AppService],
 })

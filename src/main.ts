@@ -6,7 +6,7 @@ import { join } from 'path';
 import * as session from 'express-session'
 import * as cors from 'cors'
 import { Observable } from "rxjs";
-import { observableFunc } from "./rxjs/index"
+import { observableFunc } from "./rxjs/index";
 import { Response } from './common/response';
 import { HttpFilter } from './common/filter';
 import { ValidationPipe } from '@nestjs/common';

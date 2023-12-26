@@ -15,8 +15,8 @@ export class UploadController {
   @Post('album')
   @UseInterceptors(FileInterceptor('file'))
   upload(@UploadedFile() file){
-    console.log('xx---------------------------')
-    console.log(file)
+    // console.log('xx---------------------------')
+    // console.log(file)
     return true
   }
 
