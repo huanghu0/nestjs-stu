@@ -7,9 +7,29 @@ import { UserModule } from './user/user.module';
 import { UploadModule } from './upload/upload.module';
 import { PipeModule } from './pipe/pipe.module';
 import { RoleModule } from './role/role.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { StudentModule } from './student/student.module';
+// import { Student } from './student/entities/student.entity';
 
 @Module({
-  imports: [CatsModule, UserModule, UploadModule, PipeModule, RoleModule],
+  imports: [
+    CatsModule, 
+    UserModule, 
+    UploadModule, 
+    PipeModule, 
+    RoleModule,
+    TypeOrmModule.forRoot({
+      type:'mysql',
+      host:'localhost',
+      port:3306,
+      username:'root',
+      password:'123456',
+      database:'test_node',
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: true,
+    }),
+    StudentModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
