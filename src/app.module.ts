@@ -9,7 +9,7 @@ import { PipeModule } from './pipe/pipe.module';
 import { RoleModule } from './role/role.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { StudentModule } from './student/student.module';
-// import { Student } from './student/entities/student.entity';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
@@ -18,6 +18,7 @@ import { StudentModule } from './student/student.module';
     UploadModule, 
     PipeModule, 
     RoleModule,
+    StudentModule,
     TypeOrmModule.forRoot({
       type:'mysql',
       host:'localhost',
@@ -27,8 +28,9 @@ import { StudentModule } from './student/student.module';
       database:'test_node',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
+      name:'one'
     }),
-    StudentModule
+    MongooseModule.forRoot('mongodb://127.0.0.1:27017/test_node',{connectionName:'test_node'})
   ],
   controllers: [AppController],
   providers: [AppService],

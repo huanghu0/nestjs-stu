@@ -9,21 +9,22 @@ export class StudentController {
 
   @Post()
   create(@Body() createStudentDto: CreateStudentDto) {
+    // console.log (createStudentDto,'xx--------------------------')
     return this.studentService.create(createStudentDto);
   }
 
   @Get()
   findAll(@Query() query) {
-    return this.studentService.findAll(query);
+    return this.studentService.findAll();
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStudentDto: UpdateStudentDto) {
-    return this.studentService.update(+id, updateStudentDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateStudentDto: UpdateStudentDto) {
+  //   return this.studentService.update(+id, updateStudentDto);
+  // }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.studentService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.studentService.remove(+id);
+  // }
 }
