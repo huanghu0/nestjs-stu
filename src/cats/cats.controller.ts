@@ -1,4 +1,4 @@
-import { Controller,Get, Req,Post, HttpCode, Header, Redirect, Query, Param,Delete,Bind,Body,Put,Res,HttpStatus,Dependencies, UseInterceptors, ParseUUIDPipe  } from "@nestjs/common";
+import { Controller,Get, Req,Post, HttpCode, Header, Redirect, Query, Param,Delete,Bind,Body,Put,Res,HttpStatus,Dependencies, UseInterceptors, ParseUUIDPipe, OnModuleInit, OnApplicationBootstrap, OnModuleDestroy, BeforeApplicationShutdown, OnApplicationShutdown  } from "@nestjs/common";
 import { Request,Response } from "express";
 import { CatsService } from './cats.service';
 import { Cat } from "./interface";
@@ -10,9 +10,29 @@ import { ApiTags } from "@nestjs/swagger";
 @Controller('cats')
 @ApiTags('猫')
 @UseInterceptors(LoggingInterceptor)
-export class CatsController {
+export class CatsController implements OnModuleInit,OnApplicationBootstrap,OnModuleDestroy,BeforeApplicationShutdown,OnApplicationShutdown   {
   constructor(private readonly catsService: CatsService ) {
   }
+
+  onModuleInit() {
+    console.log('CatsController onModuleInit')
+  }
+
+  onApplicationBootstrap() {
+    console.log('CatsController onApplicationBootstrap')
+  }
+
+  onModuleDestroy() {
+    console.log('CatsController onModuleDestroy')
+  }
+
+  beforeApplicationShutdown(){
+    console.log('CatsController beforeApplicationShutdown')
+  }
+
+  onApplicationShutdown(){
+    console.log('CatsController onApplicationShutdown')
+  }    
 
   @Post()
   async create(@Body() createCatDto:Cat) {

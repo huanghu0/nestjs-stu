@@ -40,6 +40,9 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('/api-doc', app, document);
   await app.listen(3000);
+  setTimeout(() => {
+    app.close();
+  },3000)
 }
 bootstrap();
 

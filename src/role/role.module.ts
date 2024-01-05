@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { BeforeApplicationShutdown, Module, OnApplicationBootstrap, OnApplicationShutdown, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { RoleService } from './role.service';
 import { RoleController } from './role.controller';
 
@@ -6,4 +6,25 @@ import { RoleController } from './role.controller';
   controllers: [RoleController],
   providers: [RoleService],
 })
-export class RoleModule {}
+export class RoleModule implements OnModuleInit,OnApplicationBootstrap,OnModuleDestroy,BeforeApplicationShutdown,OnApplicationShutdown {
+  onModuleInit() {
+    console.log('roleModule onModuleInit')
+  }
+
+  onApplicationBootstrap() {
+    console.log('roleModule onApplicationBootstrap')
+  }  
+
+  onModuleDestroy() {
+    console.log('RoleModule onModuleDestroy')
+  }
+
+  beforeApplicationShutdown(){
+    console.log('RoleModule beforeApplicationShutdown')
+  }
+
+  onApplicationShutdown(){
+    console.log('RoleModule onApplicationShutdown')
+  }   
+  
+}

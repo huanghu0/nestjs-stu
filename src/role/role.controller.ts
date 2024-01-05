@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, SetMetadata } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, SetMetadata, OnModuleInit, OnApplicationBootstrap, OnModuleDestroy, BeforeApplicationShutdown, OnApplicationShutdown } from '@nestjs/common';
 import { RoleService } from './role.service';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
@@ -9,8 +9,28 @@ import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 @Controller('role')
 @ApiTags('角色')
 @UseGuards(RoleGuard)
-export class RoleController {
+export class RoleController implements OnModuleInit,OnApplicationBootstrap,OnModuleDestroy,BeforeApplicationShutdown,OnApplicationShutdown {
   constructor(private readonly roleService: RoleService) {}
+
+  onModuleInit() {
+    console.log('roleController onModuleInit')
+  }
+
+  onApplicationBootstrap() {
+    console.log('roleController onApplicationBootstrap')
+  }
+
+  onModuleDestroy() {
+    console.log('RoleController onModuleDestroy')
+  }
+
+  beforeApplicationShutdown(){
+    console.log('RoleController beforeApplicationShutdown')
+  }
+
+  onApplicationShutdown(){
+    console.log('RoleController onApplicationShutdown')
+  }   
 
   @Post()
   create(@Body() createRoleDto: CreateRoleDto) {
