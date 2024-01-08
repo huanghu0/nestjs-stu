@@ -11,6 +11,7 @@ import { Response } from './common/response';
 import { HttpFilter } from './common/filter';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder,SwaggerModule } from '@nestjs/swagger';
+import { LoggerGuard } from './logger/logger.guard'
 
 const whiteList = ['/list']
 
@@ -27,9 +28,10 @@ async function bootstrap() {
   app.enableVersioning({
     type: VersioningType.URI
   })
-  // app.use(middleWareAll)
+  // app.use(middleWareAll) // 全局中间件
   app.use(cors())
   app.use(session({secret: "HuangHu", name: "huanghu.session", rolling: true, cookie: { maxAge: null }  }))
+  // app.useGlobalGuards(new LoggerGuard())
   app.useGlobalInterceptors(new Response())
   app.useGlobalFilters(new HttpFilter())
   app.useStaticAssets(join(__dirname,'images'),{
@@ -40,9 +42,9 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('/api-doc', app, document);
   await app.listen(3000);
-  setTimeout(() => {
-    app.close();
-  },3000)
+  // setTimeout(() => {
+  //   app.close();
+  // },3000)
 }
 bootstrap();
 
