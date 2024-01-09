@@ -30,7 +30,7 @@ async function bootstrap() {
   })
   // app.use(middleWareAll) // 全局中间件
   app.use(cors())
-  app.use(session({secret: "HuangHu", name: "huanghu.session", rolling: true, cookie: { maxAge: null }  }))
+  app.use(session({secret: "HuangHu", name: "huanghu.session", rolling: true, cookie: { maxAge: 600000 }  }))
   // app.useGlobalGuards(new LoggerGuard())
   app.useGlobalInterceptors(new Response())
   app.useGlobalFilters(new HttpFilter())
@@ -38,6 +38,9 @@ async function bootstrap() {
     prefix:'/huanghu'
   })
   app.useGlobalPipes(new ValidationPipe())
+  app.useStaticAssets(join(__dirname, '..', 'toPublic'));
+  app.setBaseViewsDir(join(__dirname, '..', 'toViews'));
+  app.setViewEngine('hbs');
   const options = new DocumentBuilder().setTitle('nestjs-stu-接口文档').setDescription('描述......').setVersion('1.0.0').build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('/api-doc', app, document);
