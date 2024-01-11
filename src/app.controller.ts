@@ -1,6 +1,8 @@
 import { Controller, Get, HostParam, Ip, Redirect, Render, Req, Res, Session } from '@nestjs/common';
 import session from 'express-session';
 import { AppService } from './app.service';
+import { request } from 'http';
+import { FastifyReply, FastifyRequest } from 'fastify';
 
 // @Controller({ host:':host.0.0.1' })
 @Controller()
@@ -8,9 +10,15 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  getHello(@Req() request:FastifyRequest,@Res() replay:FastifyReply) {
+    replay.header('url',request.url)
+    replay.send('hello')
   }
+
+  // @Get()
+  // getHello(): string {
+  //   return this.appService.getHello();
+  // }
 
   @Get('/ip')
   ip(@Ip() ip:string) {

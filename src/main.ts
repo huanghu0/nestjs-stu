@@ -12,6 +12,7 @@ import { HttpFilter } from './common/filter';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder,SwaggerModule } from '@nestjs/swagger';
 import { LoggerGuard } from './logger/logger.guard'
+import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 
 const whiteList = ['/list']
 
@@ -24,6 +25,10 @@ function middleWareAll (req,res,next) {
 }
 
 async function bootstrap() {
+
+  // const app = await NestFactory.create<NestFastifyApplication>(AppModule,new FastifyAdapter());
+  // await app.listen(3000)
+
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableVersioning({
     type: VersioningType.URI
