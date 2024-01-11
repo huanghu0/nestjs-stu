@@ -12,6 +12,9 @@ import { StudentModule } from './student/student.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { APP_GUARD } from '@nestjs/core';
 import { LoggerGuard } from './logger/logger.guard';
+import { AaaModule } from './aaa/aaa.module';
+import { BbbModule } from './bbb/bbb.module';
+import { ReqUrl } from './role/role.decorator';
 
 @Module({
   imports: [
@@ -32,7 +35,30 @@ import { LoggerGuard } from './logger/logger.guard';
       synchronize: true,
       name:'one'
     }),
-    MongooseModule.forRoot('mongodb://127.0.0.1:27017/test_node',{connectionName:'test_node'})
+    MongooseModule.forRoot('mongodb://127.0.0.1:27017/test_node',{connectionName:'test_node'}),
+    // AaaModule.register({
+    //   aaa:1,
+    //   bbb:'12'
+    // }),
+    // AaaModule.registerAsync({
+    //   useFactory: async () => {
+    //     await 111;
+    //     return {
+    //       aaa:222,
+    //       bbb:'111'
+    //     }
+    //   },
+    //   inject:[]
+    // }), 
+    AaaModule.register({
+      aaa:1,
+      bbb:'bbb',
+      isGlobal:true
+    }),   
+    BbbModule.register({
+      aaa:1,
+      bbb:2
+    })
   ],
   controllers: [AppController],
   providers: [
