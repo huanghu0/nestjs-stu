@@ -3,7 +3,7 @@ import { RoleService } from './role.service';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { RoleGuard } from './role.guard';
-import { Role,ReqUrl } from './role.decorator';
+import { Role,ReqUrl,RoleAndGet } from './role.decorator';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
 @Controller('role')
@@ -37,9 +37,10 @@ export class RoleController implements OnModuleInit,OnApplicationBootstrap,OnMod
     return this.roleService.create(createRoleDto);
   }
 
-  @Get()
+  // @Get()
   // @SetMetadata('role',['admin'])  
-  @Role(['admin'])
+  // @Role(['admin'])
+  @RoleAndGet('/user',['admin'])
   @ApiOperation({summary:"测试admin",description:"请求该接口需要amdin权限"})
   findAll(@ReqUrl() url) {
     // console.log(url,'url--------------------------------')
