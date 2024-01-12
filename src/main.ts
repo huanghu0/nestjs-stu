@@ -9,7 +9,7 @@ import { Observable } from "rxjs";
 import { observableFunc } from "./rxjs/index";
 import { Response } from './common/response';
 import { HttpFilter } from './common/filter';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe,ParseArrayPipe } from '@nestjs/common';
 import { DocumentBuilder,SwaggerModule } from '@nestjs/swagger';
 import { LoggerGuard } from './logger/logger.guard'
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';

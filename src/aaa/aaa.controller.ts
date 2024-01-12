@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Inject } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Inject, Query, ParseIntPipe } from '@nestjs/common';
 import { ASYNC_OPTIONS_TYPE, CccModuleOptions, MODULE_OPTIONS_TOKEN, OPTIONS_TYPE } from './aaa.module-definition';
 import { AaaService } from './aaa.service';
 import { CreateAaaDto } from './dto/create-aaa.dto';
@@ -17,7 +17,7 @@ export class AaaController {
   }
 
   @Get()
-  findAll() {
+  findAll(@Query('aa',ParseIntPipe) aa:string) {
     return this.configOptions;
   }
 
