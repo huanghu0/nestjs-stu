@@ -14,7 +14,7 @@ export class BbbController {
 
   @Get()
   findAll() {
-    console.log(this.configOptions,'configOptions---------------')
+    // console.log(this.configOptions,'configOptions---------------')
     return this.bbbService.findAll();
   }
 

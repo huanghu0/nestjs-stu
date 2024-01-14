@@ -15,6 +15,7 @@ import { LoggerGuard } from './logger/logger.guard';
 import { AaaModule } from './aaa/aaa.module';
 import { BbbModule } from './bbb/bbb.module';
 import { ReqUrl } from './role/role.decorator';
+import { FileModule } from './file/file.module';
 
 @Module({
   imports: [
@@ -58,7 +59,7 @@ import { ReqUrl } from './role/role.decorator';
     BbbModule.register({
       aaa:1,
       bbb:2
-    })
+    }), FileModule
   ],
   controllers: [AppController],
   providers: [
