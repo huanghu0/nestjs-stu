@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, UploadedFiles } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, UploadedFiles, Query } from '@nestjs/common';
 import { FileService } from './file.service';
 import { CreateFileDto } from './dto/create-file.dto';
 import { UpdateFileDto } from './dto/update-file.dto';
 import { AnyFilesInterceptor, FileFieldsInterceptor, FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import * as fs from 'fs'
 
 @Controller('file')
 export class FileController {
@@ -75,5 +76,52 @@ export class FileController {
   }  
 
 
+  // 接受分片上传的文件 前端回分批调用
+  @Post('sliceupload')
+  @UseInterceptors(FilesInterceptor('files', 20, {
+    dest: 'uploads'
+  }))
+  uploadSilceFiles(@UploadedFiles() files: Array<Express.Multer.File>, @Body() body: { name: string }) {
+    console.log('body', body);
+    console.log('files', files);
+  
+    const fileName = body.name.match(/(.+)\-\d+$/)[1];
+    const chunkDir = 'uploads/chunks_'+ fileName;
+  
+    if(!fs.existsSync(chunkDir)){
+      fs.mkdirSync(chunkDir);
+    }
+    fs.cpSync(files[0].path, chunkDir + '/' + body.name);
+    fs.rmSync(files[0].path);
+  }  
+
+  // 合并分片的文件 
+  @Get('merge')
+  merge(@Query('name') name: string) {
+      const chunkDir = 'uploads/chunks_'+ name;
+  
+      const files = fs.readdirSync(chunkDir);
+  
+      let count = 0;
+      let startPos = 0;
+      files.map(file => {
+        const filePath = chunkDir + '/' + file;
+        const stream = fs.createReadStream(filePath);
+        stream.pipe(fs.createWriteStream('uploads/' + name, {
+          start: startPos
+        })).on('finish', () => {
+          count ++;
+  
+          if(count === files.length) {
+            fs.rm(chunkDir, {
+              recursive: true
+            }, () =>{});
+          }
+        })
+  
+        startPos += fs.statSync(filePath).size;
+      });
+  }
+  
 
 }
