@@ -13,6 +13,7 @@ import { ValidationPipe,ParseArrayPipe } from '@nestjs/common';
 import { DocumentBuilder,SwaggerModule } from '@nestjs/swagger';
 import { LoggerGuard } from './logger/logger.guard'
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
+import { WINSTON_LOGGER_TOKEN } from './winston/winston.module';
 
 const whiteList = ['/list']
 
@@ -45,6 +46,7 @@ async function bootstrap() {
   app.useStaticAssets(join(__dirname, '..', 'toPublic'));
   app.setBaseViewsDir(join(__dirname, '..', 'toViews'));
   app.setViewEngine('hbs');
+  app.useLogger(app.get(WINSTON_LOGGER_TOKEN))
   const options = new DocumentBuilder().setTitle('nestjs-stu-接口文档').setDescription('描述......').setVersion('1.0.0').build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('/api-doc', app, document);

@@ -9,28 +9,29 @@ import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 @Controller('role')
 @ApiTags('角色')
 @UseGuards(RoleGuard)
-export class RoleController implements OnModuleInit,OnApplicationBootstrap,OnModuleDestroy,BeforeApplicationShutdown,OnApplicationShutdown {
+// implements OnModuleInit,OnApplicationBootstrap,OnModuleDestroy,BeforeApplicationShutdown,OnApplicationShutdown
+export class RoleController {
   constructor(private readonly roleService: RoleService) {}
 
-  onModuleInit() {
-    console.log('roleController onModuleInit')
-  }
+  // onModuleInit() {
+  //   console.log('roleController onModuleInit')
+  // }
 
-  onApplicationBootstrap() {
-    console.log('roleController onApplicationBootstrap')
-  }
+  // onApplicationBootstrap() {
+  //   console.log('roleController onApplicationBootstrap')
+  // }
 
-  onModuleDestroy() {
-    console.log('RoleController onModuleDestroy')
-  }
+  // onModuleDestroy() {
+  //   console.log('RoleController onModuleDestroy')
+  // }
 
-  beforeApplicationShutdown(){
-    console.log('RoleController beforeApplicationShutdown')
-  }
+  // beforeApplicationShutdown(){
+  //   console.log('RoleController beforeApplicationShutdown')
+  // }
 
-  onApplicationShutdown(){
-    console.log('RoleController onApplicationShutdown')
-  }   
+  // onApplicationShutdown(){
+  //   console.log('RoleController onApplicationShutdown')
+  // }   
 
   @Post()
   create(@Body() createRoleDto: CreateRoleDto) {

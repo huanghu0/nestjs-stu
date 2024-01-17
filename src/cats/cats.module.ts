@@ -6,24 +6,25 @@ import { CatsService } from './cats.service';
   controllers: [CatsController],
   providers: [CatsService],
 })
-export class CatsModule implements OnModuleInit,OnApplicationBootstrap,OnModuleDestroy,BeforeApplicationShutdown,OnApplicationShutdown {
-  onModuleInit() {
-    console.log('CatsModule onModuleInit')
-  }
+// implements OnModuleInit,OnApplicationBootstrap,OnModuleDestroy,BeforeApplicationShutdown,OnApplicationShutdown
+export class CatsModule  {
+  // onModuleInit() {
+  //   console.log('CatsModule onModuleInit')
+  // }
 
-  onApplicationBootstrap() {
-    console.log('CatsModule onApplicationBootstrap')
-  }    
+  // onApplicationBootstrap() {
+  //   console.log('CatsModule onApplicationBootstrap')
+  // }    
 
-  onModuleDestroy() {
-    console.log('CatsModule onModuleDestroy')
-  }
+  // onModuleDestroy() {
+  //   console.log('CatsModule onModuleDestroy')
+  // }
 
-  beforeApplicationShutdown(){
-    console.log('CatsModule beforeApplicationShutdown')
-  }
+  // beforeApplicationShutdown(){
+  //   console.log('CatsModule beforeApplicationShutdown')
+  // }
 
-  onApplicationShutdown(){
-    console.log('CatsModule onApplicationShutdown')
-  }  
+  // onApplicationShutdown(){
+  //   console.log('CatsModule onApplicationShutdown')
+  // }  
 }

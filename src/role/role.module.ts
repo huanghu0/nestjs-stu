@@ -6,25 +6,26 @@ import { RoleController } from './role.controller';
   controllers: [RoleController],
   providers: [RoleService],
 })
-export class RoleModule implements OnModuleInit,OnApplicationBootstrap,OnModuleDestroy,BeforeApplicationShutdown,OnApplicationShutdown {
-  onModuleInit() {
-    console.log('roleModule onModuleInit')
-  }
+// implements OnModuleInit,OnApplicationBootstrap,OnModuleDestroy,BeforeApplicationShutdown,OnApplicationShutdown
+export class RoleModule  {
+  // onModuleInit() {
+  //   console.log('roleModule onModuleInit')
+  // }
 
-  onApplicationBootstrap() {
-    console.log('roleModule onApplicationBootstrap')
-  }  
+  // onApplicationBootstrap() {
+  //   console.log('roleModule onApplicationBootstrap')
+  // }  
 
-  onModuleDestroy() {
-    console.log('RoleModule onModuleDestroy')
-  }
+  // onModuleDestroy() {
+  //   console.log('RoleModule onModuleDestroy')
+  // }
 
-  beforeApplicationShutdown(){
-    console.log('RoleModule beforeApplicationShutdown')
-  }
+  // beforeApplicationShutdown(){
+  //   console.log('RoleModule beforeApplicationShutdown')
+  // }
 
-  onApplicationShutdown(){
-    console.log('RoleModule onApplicationShutdown')
-  }   
+  // onApplicationShutdown(){
+  //   console.log('RoleModule onApplicationShutdown')
+  // }   
   
 }

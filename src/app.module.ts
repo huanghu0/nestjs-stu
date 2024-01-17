@@ -16,6 +16,10 @@ import { AaaModule } from './aaa/aaa.module';
 import { BbbModule } from './bbb/bbb.module';
 import { ReqUrl } from './role/role.decorator';
 import { FileModule } from './file/file.module';
+import { WinstonModule } from './winston/winston.module';
+import { transports, format } from 'winston';
+import * as chalk from 'chalk';
+import 'winston-daily-rotate-file';
 
 @Module({
   imports: [
@@ -59,7 +63,41 @@ import { FileModule } from './file/file.module';
     BbbModule.register({
       aaa:1,
       bbb:2
-    }), FileModule
+    }), 
+    FileModule,
+    WinstonModule.forRoot({
+      level: 'debug',
+      format: format.simple(),
+      transports: [
+          new transports.Console({
+              format: format.combine(
+                  format.colorize(),
+                  format.printf(({context, level, message, time}) => {
+                      const appStr = chalk.green(`[NEST]`);
+                      const contextStr = chalk.yellow(`[${context}]`);
+  
+                      return `${appStr} ${time} ${level} ${contextStr} ${message} `;
+                  })
+              ),
+
+          }),
+          // new transports.File({
+          //     format: format.combine(
+          //         format.timestamp(),
+          //         format.json()
+          //     ),
+          //     filename: '111.log',
+          //     dirname: 'log'
+          // })
+          new transports.DailyRotateFile({
+              level: 'info',
+              dirname: 'log',
+              filename: 'test-%DATE%.log',
+              datePattern: 'YYYY-MM-DD-HH-mm',
+              maxSize: '1k'
+          })          
+      ]
+    })
   ],
   controllers: [AppController],
   providers: [

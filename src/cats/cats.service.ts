@@ -1,29 +1,30 @@
 import { BeforeApplicationShutdown, Injectable, OnApplicationBootstrap, OnApplicationShutdown, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { Cat } from './interface';
 
+// implements OnModuleInit,OnApplicationBootstrap,OnModuleDestroy,BeforeApplicationShutdown,OnApplicationShutdown 
 @Injectable()
-export class CatsService implements OnModuleInit,OnApplicationBootstrap,OnModuleDestroy,BeforeApplicationShutdown,OnApplicationShutdown {
+export class CatsService {
   private readonly cats: Cat[] = [];
 
-  onModuleInit() {
-    console.log('CatsService onModuleInit')
-  }
+  // onModuleInit() {
+  //   console.log('CatsService onModuleInit')
+  // }
 
-  onApplicationBootstrap() {
-    console.log('CatsService onApplicationBootstrap')
-  } 
+  // onApplicationBootstrap() {
+  //   console.log('CatsService onApplicationBootstrap')
+  // } 
 
-  onModuleDestroy() {
-    console.log('CatsService onModuleDestroy')
-  }
+  // onModuleDestroy() {
+  //   console.log('CatsService onModuleDestroy')
+  // }
 
-  beforeApplicationShutdown(){
-    console.log('CatsService beforeApplicationShutdown')
-  }
+  // beforeApplicationShutdown(){
+  //   console.log('CatsService beforeApplicationShutdown')
+  // }
 
-  onApplicationShutdown(){
-    console.log('CatsService onApplicationShutdown')
-  }
+  // onApplicationShutdown(){
+  //   console.log('CatsService onApplicationShutdown')
+  // }
 
 
   create(cat: Cat) {

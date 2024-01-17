@@ -10,29 +10,30 @@ import { ApiTags } from "@nestjs/swagger";
 @Controller('cats')
 @ApiTags('猫')
 @UseInterceptors(LoggingInterceptor)
-export class CatsController implements OnModuleInit,OnApplicationBootstrap,OnModuleDestroy,BeforeApplicationShutdown,OnApplicationShutdown   {
+// implements OnModuleInit,OnApplicationBootstrap,OnModuleDestroy,BeforeApplicationShutdown,OnApplicationShutdown
+export class CatsController    {
   constructor(private readonly catsService: CatsService ) {
   }
 
-  onModuleInit() {
-    console.log('CatsController onModuleInit')
-  }
+  // onModuleInit() {
+  //   console.log('CatsController onModuleInit')
+  // }
 
-  onApplicationBootstrap() {
-    console.log('CatsController onApplicationBootstrap')
-  }
+  // onApplicationBootstrap() {
+  //   console.log('CatsController onApplicationBootstrap')
+  // }
 
-  onModuleDestroy() {
-    console.log('CatsController onModuleDestroy')
-  }
+  // onModuleDestroy() {
+  //   console.log('CatsController onModuleDestroy')
+  // }
 
-  beforeApplicationShutdown(){
-    console.log('CatsController beforeApplicationShutdown')
-  }
+  // beforeApplicationShutdown(){
+  //   console.log('CatsController beforeApplicationShutdown')
+  // }
 
-  onApplicationShutdown(){
-    console.log('CatsController onApplicationShutdown')
-  }    
+  // onApplicationShutdown(){
+  //   console.log('CatsController onApplicationShutdown')
+  // }    
 
   @Post()
   async create(@Body() createCatDto:Cat) {
