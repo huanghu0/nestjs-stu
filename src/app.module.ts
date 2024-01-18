@@ -28,19 +28,19 @@ import 'winston-daily-rotate-file';
     UploadModule, 
     PipeModule, 
     RoleModule,
-    StudentModule,
-    TypeOrmModule.forRoot({
-      type:'mysql',
-      host:'localhost',
-      port:3306,
-      username:'root',
-      password:'123456',
-      database:'test_node',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true,
-      name:'one'
-    }),
-    MongooseModule.forRoot('mongodb://127.0.0.1:27017/test_node',{connectionName:'test_node'}),
+    // StudentModule,
+    // TypeOrmModule.forRoot({
+    //   type:'mysql',
+    //   host:'localhost',
+    //   port:3306,
+    //   username:'root',
+    //   password:'123456',
+    //   database:'test_node',
+    //   entities: [__dirname + '/**/*.entity{.ts,.js}'],
+    //   synchronize: true,
+    //   name:'one'
+    // }),
+    // MongooseModule.forRoot('mongodb://127.0.0.1:27017/test_node',{connectionName:'test_node'}),
     // AaaModule.register({
     //   aaa:1,
     //   bbb:'12'

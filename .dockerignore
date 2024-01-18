@@ -1,0 +1,10 @@
+*.md
+node_modules/
+.git/
+.DS_Store
+.vscode/
+.dockerignore
+log/
+uploads/
+toViews/
+toPublic/
