@@ -5,6 +5,7 @@
 /uploads
 /toViews
 /toPublic
+/mysqlData
 
 # Logs
 logs
