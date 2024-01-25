@@ -18,6 +18,7 @@ import { ReqUrl } from './role/role.decorator';
 import { FileModule } from './file/file.module';
 import { WinstonModule } from './winston/winston.module';
 import { transports, format } from 'winston';
+import { User } from './user/entities/user.entity';
 import * as chalk from 'chalk';
 import 'winston-daily-rotate-file';
 
@@ -29,17 +30,22 @@ import 'winston-daily-rotate-file';
     PipeModule, 
     RoleModule,
     // StudentModule,
-    // TypeOrmModule.forRoot({
-    //   type:'mysql',
-    //   host:'localhost',
-    //   port:3306,
-    //   username:'root',
-    //   password:'123456',
-    //   database:'test_node',
-    //   entities: [__dirname + '/**/*.entity{.ts,.js}'],
-    //   synchronize: true,
-    //   name:'one'
-    // }),
+    TypeOrmModule.forRoot({
+      type:'mysql',
+      host:'localhost',
+      port:3306,
+      username:'root',
+      password:'123456',
+      database:'test',
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: true,
+      logging:true,
+      poolSize:10,
+      connectorPackage:'mysql2',
+      extra:{
+        authPlugin:'sha256_password'
+      }
+    }),    
     // MongooseModule.forRoot('mongodb://127.0.0.1:27017/test_node',{connectionName:'test_node'}),
     // AaaModule.register({
     //   aaa:1,
