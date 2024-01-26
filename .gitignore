@@ -6,6 +6,8 @@
 /toViews
 /toPublic
 /mysqlData
+/mongoData
+/redis
 
 # Logs
 logs
