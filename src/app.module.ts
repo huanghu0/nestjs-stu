@@ -21,6 +21,7 @@ import { transports, format } from 'winston';
 import { User } from './user/entities/user.entity';
 import * as chalk from 'chalk';
 import 'winston-daily-rotate-file';
+import { createClient } from 'redis';
 
 @Module({
   imports: [
@@ -111,7 +112,20 @@ import 'winston-daily-rotate-file';
     {
       provide: APP_GUARD,
       useClass: LoggerGuard
-    }
+    },
+    {
+      provide: 'REDIS_CLIENT',
+      async useFactory() {
+        const client = createClient({
+            socket: {
+                host: 'localhost',
+                port: 6379
+            }
+        });
+        await client.connect();
+        return client;
+      }
+    }    
   ],
 })
 export class AppModule implements NestModule {

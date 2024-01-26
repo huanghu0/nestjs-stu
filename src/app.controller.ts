@@ -62,4 +62,10 @@ export class AppController {
   lizhien() {
     return { name:'lizhien',age:24 }
   }
+
+  @Get('/redis')
+  async getRedis(){
+    return await this.appService.getRedisKeys();
+  }
+
 }
