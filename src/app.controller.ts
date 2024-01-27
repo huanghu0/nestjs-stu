@@ -1,8 +1,5 @@
 import { Controller, Get, HostParam, Inject, Ip, Redirect, Render, Req, Res, Session,UseInterceptors,Query } from '@nestjs/common';
-import session from 'express-session';
 import { AppService } from './app.service';
-import { request } from 'http';
-import { FastifyReply, FastifyRequest } from 'fastify';
 import { WINSTON_LOGGER_TOKEN } from './winston/winston.module';
 import { MyCacheInterceptor } from 'src/my-cache.interceptor';
 // @Controller({ host:':host.0.0.1' })
@@ -27,12 +24,12 @@ export class AppController {
 
   @Get('/ip')
   ip(@Ip() ip:string) {
-    // console.log(ip,'ip-----------------------');
+    console.log(ip,'ip-----------------------');
   }
 
   @Get('/session')
   session(@Session() session){
-    // console.log(session,'session-----------------')
+    console.log(session,'session-----------------')
   }
 
   @Get('/host')
@@ -43,7 +40,7 @@ export class AppController {
   @Get('/getReq')
   getReq(@Req() req,@Res({  passthrough:true}) res) {
     // console.log(req,'req----------------------')
-    // console.log(res,'res----------------------')
+    console.log(res,'res----------------------')
     // res.send('getReq')
     return 'getReq'
   }

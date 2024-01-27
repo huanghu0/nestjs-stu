@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module, NestModule,RequestMethod  } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule  } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LoggerMiddleware } from './logger/middleware';
@@ -7,15 +7,11 @@ import { UploadModule } from './upload/upload.module';
 import { PipeModule } from './pipe/pipe.module';
 import { RoleModule } from './role/role.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { StudentModule } from './student/student.module';
-import { MongooseModule } from '@nestjs/mongoose';
 import { APP_GUARD } from '@nestjs/core';
 import { LoggerGuard } from './logger/logger.guard';
-import { ReqUrl } from './role/role.decorator';
 import { FileModule } from './file/file.module';
 import { WinstonModule } from './winston/winston.module';
 import { transports, format } from 'winston';
-import { User } from './user/entities/user.entity';
 import * as chalk from 'chalk';
 import 'winston-daily-rotate-file';
 import { createClient } from 'redis';
@@ -26,7 +22,6 @@ import { createClient } from 'redis';
     UploadModule, 
     PipeModule, 
     RoleModule,
-    // StudentModule,
     TypeOrmModule.forRoot({
       type:'mysql',
       host:'localhost',
@@ -43,7 +38,6 @@ import { createClient } from 'redis';
         authPlugin:'sha256_password'
       }
     }),    
-    // MongooseModule.forRoot('mongodb://127.0.0.1:27017/test_node',{connectionName:'test_node'}),
     FileModule,
     WinstonModule.forRoot({
       level: 'debug',

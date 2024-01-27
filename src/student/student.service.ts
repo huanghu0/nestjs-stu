@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { CreateStudentDto } from './dto/create-student.dto';
-import { UpdateStudentDto } from './dto/update-student.dto';
-import { Repository,Like } from 'typeorm';
 // import { InjectRepository } from '@nestjs/typeorm';
 // import { Student } from './entities/student.entity';
 import { InjectModel } from '@nestjs/mongoose';

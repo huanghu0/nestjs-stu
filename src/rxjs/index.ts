@@ -1,5 +1,5 @@
 import { Observable, interval, take } from "rxjs";
-import { map, filter,reduce,find,findIndex } from 'rxjs/operators'
+import { map, filter } from 'rxjs/operators'
  
  
 

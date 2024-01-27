@@ -1,4 +1,4 @@
-import { BeforeApplicationShutdown, Injectable, OnApplicationBootstrap, OnApplicationShutdown, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 
@@ -27,6 +27,7 @@ export class RoleService  {
   // }  
 
   create(createRoleDto: CreateRoleDto) {
+    console.log(createRoleDto,'createRoleDto---------------')
     return 'This action adds a new role';
   }
 
@@ -39,6 +40,7 @@ export class RoleService  {
   }
 
   update(id: number, updateRoleDto: UpdateRoleDto) {
+    console.log(updateRoleDto,'updateRoleDto--------------')
     return `This action updates a #${id} role`;
   }
 

@@ -5,14 +5,11 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import * as session from 'express-session'
 import * as cors from 'cors'
-import { Observable } from "rxjs";
-import { observableFunc } from "./rxjs/index";
 import { Response } from './common/response';
 import { HttpFilter } from './common/filter';
-import { ValidationPipe,ParseArrayPipe } from '@nestjs/common';
+import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder,SwaggerModule } from '@nestjs/swagger';
-import { LoggerGuard } from './logger/logger.guard'
-import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
+
 import { WINSTON_LOGGER_TOKEN } from './winston/winston.module';
 
 const whiteList = ['/list']

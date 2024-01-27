@@ -1,7 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query } from '@nestjs/common';
 import { StudentService } from './student.service';
 import { CreateStudentDto } from './dto/create-student.dto';
-import { UpdateStudentDto } from './dto/update-student.dto';
 
 @Controller('student')
 export class StudentController {
@@ -15,6 +14,7 @@ export class StudentController {
 
   @Get()
   findAll(@Query() query) {
+    console.log(query,'query----------')
     return this.studentService.findAll();
   }
 

@@ -1,7 +1,5 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Res } from '@nestjs/common';
+import { Controller, Get, Post, UseInterceptors, UploadedFile, Res } from '@nestjs/common';
 import { UploadService } from './upload.service';
-import { CreateUploadDto } from './dto/create-upload.dto';
-import { UpdateUploadDto } from './dto/update-upload.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import type { Response } from 'express'
 import { join } from 'path';
@@ -18,7 +16,7 @@ export class UploadController {
   @UseInterceptors(FileInterceptor('file'))
   upload(@UploadedFile() file){
     // console.log('xx---------------------------')
-    // console.log(file)
+    console.log(file,this.uploadService,'ss----')
     return true
   }
 

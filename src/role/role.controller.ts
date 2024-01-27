@@ -1,9 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, SetMetadata, OnModuleInit, OnApplicationBootstrap, OnModuleDestroy, BeforeApplicationShutdown, OnApplicationShutdown } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { RoleService } from './role.service';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { RoleGuard } from './role.guard';
-import { Role,ReqUrl,RoleAndGet } from './role.decorator';
+import { ReqUrl,RoleAndGet } from './role.decorator';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
 @Controller('role')

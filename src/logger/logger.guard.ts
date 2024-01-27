@@ -11,6 +11,7 @@ export class LoggerGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     // console.log('login check',this.appServide.getHello())
+    console.log(context,'context',this.appServide)
     return true;
   }
 }
