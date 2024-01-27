@@ -1,10 +1,10 @@
-import { Controller, Get, HostParam, Inject, Ip, Redirect, Render, Req, Res, Session } from '@nestjs/common';
+import { Controller, Get, HostParam, Inject, Ip, Redirect, Render, Req, Res, Session,UseInterceptors,Query } from '@nestjs/common';
 import session from 'express-session';
 import { AppService } from './app.service';
 import { request } from 'http';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { WINSTON_LOGGER_TOKEN } from './winston/winston.module';
-
+import { MyCacheInterceptor } from 'src/my-cache.interceptor';
 // @Controller({ host:':host.0.0.1' })
 @Controller()
 export class AppController {
@@ -66,6 +66,13 @@ export class AppController {
   @Get('/redis')
   async getRedis(){
     return await this.appService.getRedisKeys();
+  }
+
+  @Get('redis/aaa')
+  @UseInterceptors(MyCacheInterceptor)
+  aaa(@Query('a') a:string){
+    console.log('aaa',a)
+    return 'aaa'
   }
 
 }

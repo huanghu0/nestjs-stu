@@ -120,7 +120,8 @@ import { createClient } from 'redis';
             socket: {
                 host: 'localhost',
                 port: 6379
-            }
+            },
+            database:2
         });
         await client.connect();
         return client;
