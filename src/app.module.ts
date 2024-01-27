@@ -1,7 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule,RequestMethod  } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CatsModule } from './cats/cats.module';
 import { LoggerMiddleware } from './logger/middleware';
 import { UserModule } from './user/user.module';
 import { UploadModule } from './upload/upload.module';
@@ -12,8 +11,6 @@ import { StudentModule } from './student/student.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { APP_GUARD } from '@nestjs/core';
 import { LoggerGuard } from './logger/logger.guard';
-import { AaaModule } from './aaa/aaa.module';
-import { BbbModule } from './bbb/bbb.module';
 import { ReqUrl } from './role/role.decorator';
 import { FileModule } from './file/file.module';
 import { WinstonModule } from './winston/winston.module';
@@ -24,8 +21,7 @@ import 'winston-daily-rotate-file';
 import { createClient } from 'redis';
 
 @Module({
-  imports: [
-    CatsModule, 
+  imports: [ 
     UserModule, 
     UploadModule, 
     PipeModule, 
@@ -48,29 +44,6 @@ import { createClient } from 'redis';
       }
     }),    
     // MongooseModule.forRoot('mongodb://127.0.0.1:27017/test_node',{connectionName:'test_node'}),
-    // AaaModule.register({
-    //   aaa:1,
-    //   bbb:'12'
-    // }),
-    // AaaModule.registerAsync({
-    //   useFactory: async () => {
-    //     await 111;
-    //     return {
-    //       aaa:222,
-    //       bbb:'111'
-    //     }
-    //   },
-    //   inject:[]
-    // }), 
-    AaaModule.register({
-      aaa:1,
-      bbb:'bbb',
-      isGlobal:true
-    }),   
-    BbbModule.register({
-      aaa:1,
-      bbb:2
-    }), 
     FileModule,
     WinstonModule.forRoot({
       level: 'debug',
