@@ -28,7 +28,7 @@ import { createClient } from 'redis';
       port:3306,
       username:'root',
       password:'123456',
-      database:'test',
+      database:'user',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
       logging:true,
