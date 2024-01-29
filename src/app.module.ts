@@ -16,29 +16,18 @@ import { JwtModule } from '@nestjs/jwt'
 import * as chalk from 'chalk';
 import 'winston-daily-rotate-file';
 import { createClient } from 'redis';
+import { login_test_config,test_config } from './ormConfig'
+import { StudentModule } from './student/student.module';
 
 @Module({
   imports: [ 
-    UserModule, 
+    UserModule,
+    StudentModule, 
     UploadModule, 
     PipeModule, 
     RoleModule,
-    TypeOrmModule.forRoot({
-      type:'mysql',
-      host:'localhost',
-      port:3306,
-      username:'root',
-      password:'123456',
-      database:'user',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true,
-      logging:true,
-      poolSize:10,
-      connectorPackage:'mysql2',
-      extra:{
-        authPlugin:'sha256_password'
-      }
-    }),    
+    TypeOrmModule.forRoot(login_test_config),
+    TypeOrmModule.forRoot(test_config),    
     FileModule,
     WinstonModule.forRoot({
       level: 'debug',
