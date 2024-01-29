@@ -32,7 +32,7 @@ async function bootstrap() {
   })
   // app.use(middleWareAll) // 全局中间件
   app.use(cors())
-  app.use(session({secret: "HuangHu", name: "huanghu.session", rolling: true, cookie: { maxAge: 600000 }  }))
+  app.use(session({secret: "HuangHu", name: "huanghu.session", rolling: true, cookie: { maxAge: 600000 },resave:false,saveUninitialized:false  }))
   // app.useGlobalGuards(new LoggerGuard())
   app.useGlobalInterceptors(new Response())
   app.useGlobalFilters(new HttpFilter())

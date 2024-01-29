@@ -12,6 +12,7 @@ import { LoggerGuard } from './logger/logger.guard';
 import { FileModule } from './file/file.module';
 import { WinstonModule } from './winston/winston.module';
 import { transports, format } from 'winston';
+import { JwtModule } from '@nestjs/jwt'
 import * as chalk from 'chalk';
 import 'winston-daily-rotate-file';
 import { createClient } from 'redis';
@@ -71,6 +72,23 @@ import { createClient } from 'redis';
               maxSize: '1k'
           })          
       ]
+    }),
+    // JwtModule.register({
+    //   secret:'huanghu',
+    //   signOptions:{
+    //     expiresIn: '7d'
+    //   }
+    // })
+    JwtModule.registerAsync({
+      async useFactory() {
+        await 111;
+        return {
+          secret:'huanghu',
+          signOptions:{
+            expiresIn:'7d'
+          }
+        }
+      }
     })
   ],
   controllers: [AppController],

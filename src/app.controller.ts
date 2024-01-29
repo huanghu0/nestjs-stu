@@ -1,7 +1,9 @@
-import { Controller, Get, HostParam, Inject, Ip, Redirect, Render, Req, Res, Session,UseInterceptors,Query } from '@nestjs/common';
+import { Controller, Get, HostParam, Inject, Ip, Redirect, Render, Req, Res, Session,UseInterceptors,Query, UnauthorizedException,Headers } from '@nestjs/common';
+import { Response } from 'express';
 import { AppService } from './app.service';
 import { WINSTON_LOGGER_TOKEN } from './winston/winston.module';
 import { MyCacheInterceptor } from 'src/my-cache.interceptor';
+import { JwtService } from '@nestjs/jwt';
 // @Controller({ host:':host.0.0.1' })
 @Controller()
 export class AppController {
@@ -9,6 +11,9 @@ export class AppController {
 
   @Inject(WINSTON_LOGGER_TOKEN)
   private logger;
+
+  @Inject(JwtService)
+  private jwtService: JwtService;
   
   // @Get()
   // getHello(@Req() request:FastifyRequest,@Res() replay:FastifyReply) {
@@ -28,8 +33,10 @@ export class AppController {
   }
 
   @Get('/session')
-  session(@Session() session){
-    console.log(session,'session-----------------')
+  session(@Session() session,@Req() req){
+    console.log(session,'session',req)
+    session.count = session.count ? session.count + 1 : 1;
+    return session.count;
   }
 
   @Get('/host')
@@ -71,5 +78,32 @@ export class AppController {
     console.log('aaa',a)
     return 'aaa'
   }
+
+  @Get('ttt')
+  ttt(@Headers('authorization') authorization: string, @Res({ passthrough: true}) response: Response) {
+      if(authorization) {
+        try {
+          const token = authorization.split(' ')[1];
+          const data = this.jwtService.verify(token);
+  
+          const newToken = this.jwtService.sign({
+            count: data.count + 1
+          });
+          response.setHeader('token', newToken);
+          return data.count + 1
+        } catch(e) {
+          console.log(e);
+          throw new UnauthorizedException();
+        }
+      } else {
+        const newToken = this.jwtService.sign({
+          count: 1
+        });
+  
+        response.setHeader('token', newToken);
+        return 1;
+      }
+  }
+  
 
 }
