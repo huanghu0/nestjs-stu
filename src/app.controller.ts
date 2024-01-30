@@ -1,9 +1,10 @@
-import { Controller, Get, HostParam, Inject, Ip, Redirect, Render, Req, Res, Session,UseInterceptors,Query, UnauthorizedException,Headers } from '@nestjs/common';
+import { Controller, Get, HostParam, Inject, Ip, Redirect, Render, Req, Res, Session,UseInterceptors,Query, UnauthorizedException,Headers, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
 import { AppService } from './app.service';
 import { WINSTON_LOGGER_TOKEN } from './winston/winston.module';
 import { MyCacheInterceptor } from 'src/my-cache.interceptor';
 import { JwtService } from '@nestjs/jwt';
+import { LoginGuard } from './login.guard';
 // @Controller({ host:':host.0.0.1' })
 @Controller()
 export class AppController {
@@ -105,5 +106,11 @@ export class AppController {
       }
   }
   
+  // 检查是否登陆了
+  @Get('testHasLogin')
+  @UseGuards(LoginGuard)
+  testHasLogin(){
+    return 'yes'
+  }
 
 }

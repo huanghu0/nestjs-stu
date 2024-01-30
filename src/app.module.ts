@@ -62,23 +62,24 @@ import { StudentModule } from './student/student.module';
           })          
       ]
     }),
-    // JwtModule.register({
-    //   secret:'huanghu',
-    //   signOptions:{
-    //     expiresIn: '7d'
-    //   }
-    // })
-    JwtModule.registerAsync({
-      async useFactory() {
-        await 111;
-        return {
-          secret:'huanghu',
-          signOptions:{
-            expiresIn:'7d'
-          }
-        }
+    JwtModule.register({
+      global:true,
+      secret:'huanghu',
+      signOptions:{
+        expiresIn: '7d'
       }
     })
+    // JwtModule.registerAsync({
+    //   async useFactory() {
+    //     await 111;
+    //     return {
+    //       secret:'huanghu',
+    //       signOptions:{
+    //         expiresIn:'7d'
+    //       }
+    //     }
+    //   }
+    // })
   ],
   controllers: [AppController],
   providers: [

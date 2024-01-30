@@ -39,7 +39,7 @@ async function bootstrap() {
   app.useStaticAssets(join(__dirname,'images'),{
     prefix:'/huanghu'
   })
-  app.useGlobalPipes(new ValidationPipe())
+  // app.useGlobalPipes(new ValidationPipe())
   app.useStaticAssets(join(__dirname, '..', 'toPublic'));
   app.setBaseViewsDir(join(__dirname, '..', 'toViews'));
   app.setViewEngine('hbs');
