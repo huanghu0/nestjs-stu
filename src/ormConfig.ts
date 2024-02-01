@@ -1,5 +1,10 @@
 import { User } from "./user/entities/user.entity"
 import { Student } from "./student/entities/student.entity"
+import { Photo } from "./photo/entities/photo.entity"
+import { PhotoMetadata } from "./photo/entities/photoMetadata.entity"
+import { Author } from "./photo/entities/author.entity"
+import { Album } from "./photo/entities/album.entity"
+
 export const login_test_config:any = {
     type: "mysql",
     name:'loginTestConnection',
@@ -26,7 +31,7 @@ export const test_config:any = {
     username:'root',
     password:'123456',
     database:'test',
-    entities: [Student],
+    entities: [Student,Photo,PhotoMetadata,Author,Album],
     synchronize: true,
     logging:true,
     poolSize:10,

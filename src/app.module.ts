@@ -18,6 +18,7 @@ import 'winston-daily-rotate-file';
 import { createClient } from 'redis';
 import { login_test_config,test_config } from './ormConfig'
 import { StudentModule } from './student/student.module';
+import { PhotoModule } from './photo/photo.module';
 
 @Module({
   imports: [ 
@@ -68,7 +69,8 @@ import { StudentModule } from './student/student.module';
       signOptions:{
         expiresIn: '7d'
       }
-    })
+    }),
+    PhotoModule
     // JwtModule.registerAsync({
     //   async useFactory() {
     //     await 111;
