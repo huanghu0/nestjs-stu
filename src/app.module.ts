@@ -16,9 +16,10 @@ import { JwtModule } from '@nestjs/jwt'
 import * as chalk from 'chalk';
 import 'winston-daily-rotate-file';
 import { createClient } from 'redis';
-import { login_test_config,test_config } from './ormConfig'
+import { login_test_config,test_config,acl_test } from './ormConfig'
 import { StudentModule } from './student/student.module';
 import { PhotoModule } from './photo/photo.module';
+import { PermissonuserModule } from './permissonuser/permissonuser.module';
 
 @Module({
   imports: [ 
@@ -28,7 +29,8 @@ import { PhotoModule } from './photo/photo.module';
     PipeModule, 
     RoleModule,
     TypeOrmModule.forRoot(login_test_config),
-    TypeOrmModule.forRoot(test_config),    
+    TypeOrmModule.forRoot(test_config),
+    TypeOrmModule.forRoot(acl_test),    
     FileModule,
     WinstonModule.forRoot({
       level: 'debug',
@@ -70,7 +72,8 @@ import { PhotoModule } from './photo/photo.module';
         expiresIn: '7d'
       }
     }),
-    PhotoModule
+    PhotoModule,
+    PermissonuserModule
     // JwtModule.registerAsync({
     //   async useFactory() {
     //     await 111;
